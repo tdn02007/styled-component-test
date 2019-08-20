@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import styled, {createGlobalStyle, keyframes, css} from "styled-components";
+import styled, {createGlobalStyle, keyframes, css, ThemeProvider} from "styled-components";
+import theme from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   body{
@@ -8,18 +9,42 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const awesomeCard = css`
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+`;
+
+const Input = styled.input.attrs({
+  required: true
+})`
+  border: none;
+  ${awesomeCard};
+`;
+
+const Card = styled.div`
+  background-color: ${props => props.theme.successColor};
+`;
+
 class App extends Component{
   render(){
     return (
-      <Container>
-        <GlobalStyle whiteColor />
-        <Button >Hello</Button>
-        <Button danger rotationTime={5}>Hello</Button>
-        <Button as="a" href="http://www.google.com">Go to google</Button>
-      </Container>
+      <ThemeProvider theme={theme}>
+        <Container>
+          <GlobalStyle whiteColor />
+          <Input placeholder="hello"/>
+          <Button >Hello</Button>
+          <Button danger rotationTime={5}>Hello</Button>
+          <Button as="a" href="http://www.google.com">Go to google</Button>
+          <Form />
+        </Container>
+      </ThemeProvider>
     );
   }
 }
+
+const Form = () => (<Card><Button>Hello</Button></Card>)
 
 const Container = styled.div`
   height: 100vh;
